@@ -135,8 +135,8 @@ elif [ "${ARCH_CPU}" = "32BIT" ]; then
 	G_CROSS_COMPILER_ARCHIVE=${G_CROSS_COMPILER_ARCHIVE_32BIT}
 	G_CROSS_COMPILER_PREFIX=${G_CROSS_COMPILER_32BIT_PREFIX}
 	ARCH_ARGS="arm"
-	# Include x11 backend rootfs helper
-	source ${G_VARISCITE_PATH}/x11_rootfs.sh
+	# Include backend rootfs helper
+	source ${G_VARISCITE_PATH}/minimal_rootfs.sh
 	source ${G_VARISCITE_PATH}/linux-headers_debian_src/create_kernel_tree_arm.sh
 else
 	echo " Error unknown CPU type"
@@ -593,7 +593,7 @@ function make_ubi() {
 
 	rm -rf ${UBIFS_ROOTFS_DIR}
 	cp -a ${_rootfs} ${UBIFS_ROOTFS_DIR}
-	prepare_x11_ubifs_rootfs ${UBIFS_ROOTFS_DIR}
+	prepare_minimal_ubifs_rootfs ${UBIFS_ROOTFS_DIR}
 	# gnerate ubifs file
 	pr_info "Generate ubi config file: ${UBI_CFG}"
 cat > ${UBI_CFG} << EOF
@@ -780,9 +780,9 @@ function cmd_make_rootfs()
 
 	if [ "${MACHINE}" = "imx6ul-var-dart" ] ||
 	   [ "${MACHINE}" = "var-som-mx7" ]; then
-		# make debian x11 backend rootfs
+		# make debian backend rootfs
 		cd ${G_ROOTFS_DIR}
-		make_debian_x11_rootfs ${G_ROOTFS_DIR}
+		make_debian_minimal_rootfs ${G_ROOTFS_DIR}
 		# make imx sdma firmware
 		make_imx_sdma_fw ${G_IMX_SDMA_FW_SRC_DIR} ${G_ROOTFS_DIR}
 		cd -
@@ -858,7 +858,7 @@ function cmd_make_sdcard()
 {
 	if [ "${MACHINE}" = "imx6ul-var-dart" ] ||
 	   [ "${MACHINE}" = "var-som-mx7" ]; then
-		make_x11_sdcard ${PARAM_BLOCK_DEVICE} ${PARAM_OUTPUT_DIR}
+		make_minimal_sdcard ${PARAM_BLOCK_DEVICE} ${PARAM_OUTPUT_DIR}
 	else
 		make_weston_sdcard ${PARAM_BLOCK_DEVICE} ${PARAM_OUTPUT_DIR}
 	fi
