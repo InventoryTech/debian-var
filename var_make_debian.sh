@@ -37,15 +37,19 @@ readonly G_TOOLS_PATH="${DEF_BUILDENV}/toolchain"
 readonly G_VARISCITE_PATH="${DEF_BUILDENV}/variscite"
 
 #64 bit CROSS_COMPILER config and paths
-readonly G_CROSS_COMPILER_64BIT_NAME="gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu"
+#readonly G_CROSS_COMPILER_64BIT_NAME="gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu"
+readonly G_CROSS_COMPILER_64BIT_NAME="gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu"
 readonly G_CROSS_COMPILER_ARCHIVE_64BIT="${G_CROSS_COMPILER_64BIT_NAME}.tar.xz"
-readonly G_EXT_CROSS_64BIT_COMPILER_LINK="http://releases.linaro.org/components/toolchain/binaries/6.3-2017.05/aarch64-linux-gnu/${G_CROSS_COMPILER_ARCHIVE_64BIT}"
+#readonly G_EXT_CROSS_64BIT_COMPILER_LINK="http://releases.linaro.org/components/toolchain/binaries/6.3-2017.05/aarch64-linux-gnu/${G_CROSS_COMPILER_ARCHIVE_64BIT}"
+readonly G_EXT_CROSS_64BIT_COMPILER_LINK="http://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/aarch64-linux-gnu/${G_CROSS_COMPILER_ARCHIVE_64BIT}"
 readonly G_CROSS_COMPILER_64BIT_PREFIX="aarch64-linux-gnu-"
 
 #32 bit CROSS_COMPILER config and paths
-readonly G_CROSS_COMPILER_32BIT_NAME="gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf"
+#readonly G_CROSS_COMPILER_32BIT_NAME="gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf"
+readonly G_CROSS_COMPILER_32BIT_NAME="gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf"
 readonly G_CROSS_COMPILER_ARCHIVE_32BIT="${G_CROSS_COMPILER_32BIT_NAME}.tar.xz"
-readonly G_EXT_CROSS_32BIT_COMPILER_LINK="http://releases.linaro.org/components/toolchain/binaries/6.3-2017.05/arm-linux-gnueabihf/${G_CROSS_COMPILER_ARCHIVE_32BIT}"
+#readonly G_EXT_CROSS_32BIT_COMPILER_LINK="http://releases.linaro.org/components/toolchain/binaries/6.3-2017.05/arm-linux-gnueabihf/${G_CROSS_COMPILER_ARCHIVE_32BIT}"
+readonly G_EXT_CROSS_32BIT_COMPILER_LINK="http://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/arm-linux-gnueabihf/${G_CROSS_COMPILER_ARCHIVE_32BIT}"
 readonly G_CROSS_COMPILER_32BIT_PREFIX="arm-linux-gnueabihf-"
 
 readonly G_CROSS_COMPILER_JOPTION="-j 4"
