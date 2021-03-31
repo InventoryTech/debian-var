@@ -142,6 +142,8 @@ sed -i -e 's/#PermitRootLogin.*/PermitRootLogin\tyes/g' /etc/ssh/sshd_config
 
 # useful packages
 protected_install bash-completion
+protected_install dialog
+protected_install nano
 protected_install tmux
 
 #rng-tools
