@@ -61,6 +61,7 @@ echo "
 " > etc/fstab
 
 echo "${MACHINE}" > etc/hostname
+echo "127.0.0.1       ${MACHINE}" >> etc/hosts
 
 echo "auto lo
 iface lo inet loopback
@@ -71,7 +72,6 @@ locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8
 locales locales/default_environment_locale select en_US.UTF-8
 console-common	console-data/keymap/policy	select	Select keymap from full list
 keyboard-configuration keyboard-configuration/variant select 'English (US)'
-openssh-server openssh-server/permit-root-login select true
 " > debconf.set
 
 	pr_info "rootfs: prepare install packages in rootfs"
@@ -137,9 +137,6 @@ protected_install nfs-common
 # packages required when flashing emmc
 protected_install dosfstools
 
-# fix config for sshd (permit root login)
-sed -i -e 's/#PermitRootLogin.*/PermitRootLogin\tyes/g' /etc/ssh/sshd_config
-
 # useful packages
 protected_install bash-completion
 protected_install dialog
@@ -195,22 +192,22 @@ systemctl disable NetworkManager-wait-online.service
 # pm-utils
 protected_install pm-utils
 
+# need sudo so we can disable root login
+protected_install sudo
+
 apt-get -y autoremove
 #update iptables alternatives to legacy
 update-alternatives --set iptables /usr/sbin/iptables-legacy
 update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 
-# create users and set password
-useradd -m -G audio -s /bin/bash user
-useradd -m -G audio -s /bin/bash x_user
-usermod -a -G video user
-usermod -a -G video x_user
-usermod -a -G netdev x_user
-echo "user:user" | chpasswd
-echo "root:root" | chpasswd
-passwd -d x_user
+# create users and set passwords
+# create cfa user with sudo privilege
+useradd -m -G sudo -s /bin/bash cfa
+echo "cfa:cfa" | chpasswd
 
-# sado kill
+# disable root login 
+usermod -p '!' root
+
 rm -f third-stage
 EOF
 
