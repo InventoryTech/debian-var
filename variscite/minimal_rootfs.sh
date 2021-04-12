@@ -187,11 +187,7 @@ protected_install bluez-tools
 protected_install shared-mime-info
 
 # wifi support packages
-protected_install hostapd
 protected_install udhcpd
-
-# disable the hostapd service by default
-systemctl disable hostapd.service
 
 # disable the Wait Online service by default
 systemctl disable NetworkManager-wait-online.service
