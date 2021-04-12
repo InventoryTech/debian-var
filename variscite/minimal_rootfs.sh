@@ -17,6 +17,13 @@ function make_debian_minimal_rootfs() {
 		${ROOTFS_BASE}/ ${PARAM_DEB_LOCAL_MIRROR}
 
 	# prepare qemu
+	#!/bin/bash
+	if update-binfmts --display qemu-arm | grep -qi disabled;
+	then
+		pr_info "rootfs: enabling qemu-arm emulation"
+		sudo update-binfmts --enable qemu-arm
+	fi
+	
 	pr_info "rootfs: debootstrap in rootfs (second-stage)"
 	cp ${G_VARISCITE_PATH}/qemu_32bit/qemu-arm-static ${ROOTFS_BASE}/usr/bin/qemu-arm-static
 	mount -o bind /proc ${ROOTFS_BASE}/proc
