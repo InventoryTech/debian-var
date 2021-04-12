@@ -473,6 +473,7 @@ function make_minimal_sdcard() {
 		cp ${LPARAM_OUTPUT_DIR}/${BUILD_IMAGE_TYPE} \
 		${P2_MOUNT_DIR}/${DEBIAN_IMAGES_TO_ROOTFS_POINT}/
 		if [ "${MACHINE}" = "imx6ul-var-dart" ] ||
+		   [ "${MACHINE}" = "var-som-6ul" ] ||
 		   [ "${MACHINE}" = "var-som-mx7" ]; then
 			cp ${LPARAM_OUTPUT_DIR}/rootfs.ubi.img \
 			${P2_MOUNT_DIR}/${DEBIAN_IMAGES_TO_ROOTFS_POINT}/
@@ -502,6 +503,7 @@ function make_minimal_sdcard() {
 	{
 		pr_info "Copying scripts to /${DEBIAN_IMAGES_TO_ROOTFS_POINT}"
 		if [ "${MACHINE}" = "imx6ul-var-dart" ] ||
+		   [ "${MACHINE}" = "var-som-6ul" ] ||
 		   [ "${MACHINE}" = "var-som-mx7" ]; then
 			cp ${G_VARISCITE_PATH}/mx6ul_mx7_install_debian.sh \
 				${P2_MOUNT_DIR}/usr/sbin/install_debian.sh

@@ -73,7 +73,7 @@ function usage()
 	echo "Make Debian ${DEB_RELEASE} image and create a bootabled SD card"
 	echo
 	echo "Usage:"
-	echo " MACHINE=<imx8m-var-dart|imx8mm-var-dart|imx8qxp-var-som|imx8qxpb0-var-som|imx8qm-var-som|imx8mn-var-som|imx6ul-var-dart|var-som-mx7> ./${SCRIPT_NAME} options"
+	echo " MACHINE=<imx8m-var-dart|imx8mm-var-dart|imx8qxp-var-som|imx8qxpb0-var-som|imx8qm-var-som|imx8mn-var-som|var-som-6ul|imx6ul-var-dart|var-som-mx7> ./${SCRIPT_NAME} options"
 	echo
 	echo "Options:"
 	echo "  -h|--help   -- print this help"
@@ -539,6 +539,7 @@ function make_uboot()
 		cp ${G_UBOOT_NAME_FOR_EMMC} ${2}/${G_UBOOT_NAME_FOR_EMMC}
 		cp ${1}/tools/env/fw_printenv ${2}
 	elif [ "${MACHINE}" = "imx6ul-var-dart" ] ||
+	     [ "${MACHINE}" = "var-som-6ul" ] ||
 	     [ "${MACHINE}" = "var-som-mx7" ]; then
 		mv ${2}/fw_printenv ${2}/fw_printenv-mmc
 		#copy MMC SPL, u-boot, SPL binaries
@@ -690,7 +691,7 @@ function check_sdcard()
 function make_imx_sdma_fw() {
 	pr_info "Install imx sdma firmware"
 	install -d ${2}/lib/firmware/imx/sdma
-	if [ "${MACHINE}" = "imx6ul-var-dart" ]; then
+	if [ "${MACHINE}" = "imx6ul-var-dart" ] || [ "${MACHINE}" = "var-som-6ul" ]; then
 		install -m 0644 ${1}/imx/sdma/sdma-imx6q.bin \
 		${2}/lib/firmware/imx/sdma
 	elif  [ "${MACHINE}" = "var-som-mx7" ]; then
@@ -762,6 +763,7 @@ function cmd_make_deploy()
 
 	# SDMA firmware
 	if [ "${MACHINE}" = "imx6ul-var-dart" ] ||
+	   [ "${MACHINE}" = "var-som-6ul" ] ||
 	   [ "${MACHINE}" = "var-som-mx7" ]; then
 		# get linux-frimwrae source repository
 		(( `ls ${G_IMX_SDMA_FW_SRC_DIR}  2>/dev/null | wc -l` == 0 )) && {
@@ -779,6 +781,7 @@ function cmd_make_rootfs()
 	make_prepare;
 
 	if [ "${MACHINE}" = "imx6ul-var-dart" ] ||
+	   [ "${MACHINE}" = "var-som-6ul" ] ||
 	   [ "${MACHINE}" = "var-som-mx7" ]; then
 		# make debian backend rootfs
 		cd ${G_ROOTFS_DIR}
@@ -802,6 +805,7 @@ function cmd_make_rootfs()
 	make_tarball ${G_ROOTFS_DIR} ${G_ROOTFS_TARBALL_PATH}
 
 	if [ "${MACHINE}" = "imx6ul-var-dart" ] ||
+       [ "${MACHINE}" = "var-som-6ul" ] ||
 	   [ "${MACHINE}" = "var-som-mx7" ]; then
 		# pack to ubi
 		make_ubi ${G_ROOTFS_DIR} ${G_TMP_DIR} ${PARAM_OUTPUT_DIR} \
@@ -857,6 +861,7 @@ function cmd_make_rfs_tar()
 function cmd_make_sdcard()
 {
 	if [ "${MACHINE}" = "imx6ul-var-dart" ] ||
+	   [ "${MACHINE}" = "var-som-6ul" ] ||
 	   [ "${MACHINE}" = "var-som-mx7" ]; then
 		make_minimal_sdcard ${PARAM_BLOCK_DEVICE} ${PARAM_OUTPUT_DIR}
 	else
